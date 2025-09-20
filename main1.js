@@ -29,14 +29,21 @@ function updateWeather(lat, lon) {
       })
       .catch(err => {
           console.error("Weather API error:", err);
-          weatherInfo.innerHTML = `
-              <div class="weather-display">
-                  <div class="temperature">25°C</div>
-                  <div class="condition">Clear</div>
-              </div>
-          `;
+              // If weather API fails, render a local fallback so the UI keeps showing a nice card
+              renderFallbackWeather(weatherInfo);
       });
 }
+
+    // Render a fallback weather card when API or geolocation is not available
+    function renderFallbackWeather(container) {
+        if(!container) return;
+        container.innerHTML = `
+            <div class="weather-display">
+                <div class="temperature">10°C</div>
+                <div class="condition">scattered clouds</div>
+            </div>
+        `;
+    }
 
 // Real-time GPS location + OpenCage reverse geocoding
 function getCurrentLocation() {
@@ -72,6 +79,9 @@ function getCurrentLocation() {
                 currentLocation.coordinates = "GPS not available";
                 currentLocation.lastUpdated = "Error";
                 updateLocationDisplay();
+                // Ensure weather still shows something useful if location denied
+                const weatherInfo = document.getElementById('weather-info');
+                renderFallbackWeather(weatherInfo);
             },
             { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
         );
@@ -80,6 +90,9 @@ function getCurrentLocation() {
         currentLocation.coordinates = "Browser not supported";
         currentLocation.lastUpdated = "Error";
         updateLocationDisplay();
+        // Render fallback weather when geolocation not supported
+        const weatherInfo = document.getElementById('weather-info');
+        renderFallbackWeather(weatherInfo);
     }
 }
 
@@ -130,8 +143,25 @@ function initializeHamburgerMenu() {
     destButtons.forEach(button => {
         button.addEventListener('click', () => {
             const destinationText = button.querySelector('.dest-text').textContent;
-            showNotification(`Navigating to ${destinationText}...`);
-            setTimeout(()=>menuOverlay.classList.remove('active'), 1500);
+            showNotification(`Opening ${destinationText}...`);
+            // Map data-dest or text to actual pages (preserve measures: 800x480)
+            const dest = button.getAttribute('data-dest') || destinationText.toLowerCase();
+            const pageMap = {
+                'restaurant': 'utilities.html',
+                'utilities': 'utilities.html',
+                'supermarket': 'events.html',
+                'events': 'events.html',
+                'gas-station': 'weather.html',
+                'weather': 'weather.html'
+            };
+            const target = pageMap[dest] || pageMap[destinationText.toLowerCase()] || 'index1.html';
+
+            // Close overlay then navigate so users see the notification briefly
+            setTimeout(() => {
+                menuOverlay.classList.remove('active');
+                // Use a short delay before navigation so overlay animation completes
+                setTimeout(() => { window.location.href = target; }, 200);
+            }, 600);
         });
     });
 }

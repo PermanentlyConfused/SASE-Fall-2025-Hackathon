@@ -35,6 +35,30 @@ header {
     padding: 0 25px;
 }
 
+/* Back link button used across pages */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.12);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transition: all 0.18s ease;
+}
+
+.back-link:hover {
+    transform: translateY(-2px);
+    background: rgba(255,255,255,0.18);
+}
+
+.back-link:active {
+    transform: scale(0.98);
+}
+
 header h1 {
     font-size: 26px;
     font-weight: 700;
