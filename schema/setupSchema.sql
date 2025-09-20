@@ -39,6 +39,7 @@ CREATE TABLE HomeProfile_Utilities (
 
 CREATE TABLE Events (
     EventID SERIAL PRIMARY KEY,
+    Category TEXT NOT NULL,
     Description TEXT,
     Address TEXT,
     Date DATE,
