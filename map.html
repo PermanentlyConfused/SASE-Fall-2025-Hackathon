@@ -16,6 +16,7 @@
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""></script>
+
     <style>
       #map {
         width: 750px;
@@ -43,29 +44,7 @@
         ">
         <div id="map"></div>
       </section>
+      <script src="./map.js"></script>
     </main>
-
-    <!-- <script src="main1.js"></script> -->
   </body>
-  <script>
-    const map = L.map("map");
-    const currentLoc = [44.6698, -74.9813];
-    const indiaGrill = [44.6688102, -74.9864899];
-    map.setView(currentLoc, 17);
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 19,
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    }).addTo(map);
-
-    LocMarker = L.marker(currentLoc, {
-      title: "Current Location",
-      color: "blue",
-    }).addTo(map);
-
-    var popup = L.popup()
-      .setLatLng(indiaGrill)
-      .setContent("Indian Grill")
-      .openOn(map);
-  </script>
 </html>
