@@ -46,13 +46,14 @@ def eventsExtractor(content: str):
         - "date": (string) The date of the event mentioned in the html. Format it clearly.
         - "address": (string) The exact address of this location including street number, street, town, state, zipcode. If there is not a specific address, search up the venue name using the website domain and the provided location information, then add" (unsure)" to the end.
 
-        format: INSERT INTO Events (Category, Description, Address, Date, Time, Lat, Long) VALUES ("Events", "name", "address", "date", NULL, NULL, NULL)
+        format: INSERT INTO Events (Category, Description, Address, StartDate, EndDate, Lat, Long) VALUES ("Events", "name", "address", "start date", "end date", NULL, NULL)
 
         RULES:
         1. Create a separate INSERT statement for EACH distinct event
         2. If multiple events are found, separate them with newlines
         3. "name": The name of the event
-        4. "date": The date of the event mentioned. Format it clearly.
+        4. "start date": The date of the event mentioned. Format it clearly with date and time
+        5. "end date": The date that the mentioned event ends. Format it clearly with date and time. If there is no ending date, put NULL in this field.
         5. "address": The exact address including street number, street, town, state, zipcode. 
           If no specific address, use the venue name and add " (unsure)" to the end.
         6. Do NOT add any other text before or after the SQL statements
@@ -104,5 +105,4 @@ for result in tool_msg['results']:
 if i%chunk == 1:
     output = output + "\n"+ eventsExtractor(tavilySearch)
 
-print("Parsed Result:")
 print(output)
