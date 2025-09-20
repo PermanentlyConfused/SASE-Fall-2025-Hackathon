@@ -33,14 +33,31 @@ if not os.getenv("TAVILY_API_KEY"):
 # psql events import format
 class State(TypedDict):
   messages: Annotated[list, add_messages]
-  description: str
-  eventTime: datetime
-  address: str
+#  description: str
+#  eventTime: datetime
+#  address: str
 
 model = init_chat_model("gemini-2.0-flash", model_provider="google_genai", google_api_key= "AIzaSyBeVoIqH2D-bY0a9EcK7VRrdzovIIlD3-Q") # art pls fix this for me :>
 tool = TavilySearch(max_results=20)
 
+# custom tool for parsing:
+import requests
+@tool
+def urlHtmlextract(url: str):
+  """Use this to get the html of all the events urls"""
+  helper = requests.get(url)
+  download = helper.text
+  return{
+    "html": download
+   }
+
 tools = [tool]
+
+
+
+
+
+
 simpleModel = model.bind_tools(tools)
 
 graph_builder = StateGraph(State)
@@ -77,24 +94,13 @@ config = {"configurable": {"thread_id": "test"}}
 userinp = input("Search: ")
 
 events = graph.stream({"messages": [{"role": "user", "content": userinp}]},
-                      config,
+                      config = config,
                       stream_mode = "values"
                       )
 for event in events:
   if "messages" in event:
     event["messages"][-1].pretty_print()
 
-# Verify if correct
-humanCommand = Command(resume = {"messages": [ToolMessage(
-    content="Correct",
-    tool_call_id="humanAssistance"
-)],
-}
-                       )
-
-events = graph.stream(humanCommand, config, stream_mode = "values")
-
-# Feed back to the model
-for event in events:
-  if "messages" in event:
-    event["messages"][-1].pretty_print()
+# next part is to write a parsing tool for the tavily search. let gemini use the tool and figure out how to parse
+events = []
+event = {}
