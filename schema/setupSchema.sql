@@ -1,3 +1,4 @@
+DROP DATABASE home_db;
 CREATE DATABASE home_db;
 \c home_db;
 
@@ -7,9 +8,9 @@ CREATE TABLE HomeProfile (
     StateProvince VARCHAR(100),
     Town VARCHAR(100),
     Color VARCHAR(50),
-    Lat NUMERIC(9,7)
-    Long NUMERIC(9,7)
-    Ownership TEXT  
+    Lat NUMERIC(9,7),
+    Long NUMERIC(9,7),
+    Ownership TEXT
 );
 
 CREATE TABLE Hobbies (
@@ -44,7 +45,7 @@ CREATE TABLE Events (
     Address TEXT,
     Date DATE,
     Time TIME,    
-    Lat NUMERIC(9,7)
+    Lat NUMERIC(9,7),
     Long NUMERIC(9,7)
 );
 
