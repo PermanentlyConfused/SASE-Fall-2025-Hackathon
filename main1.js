@@ -1,106 +1,110 @@
 const API_CONFIG = {
-    WEATHER_API_KEY: '097a29234019d1584d2e58988bf19873'
+  WEATHER_API_KEY: "097a29234019d1584d2e58988bf19873",
 };
-const GEOCODING_API_KEY = '975dc8a1e9df4b3f968ae19714f8131e';
+const GEOCODING_API_KEY = "975dc8a1e9df4b3f968ae19714f8131e";
 
 let currentLocation = {
-    address: "",
-    coordinates: "",
-    lastUpdated: "Just now"
+  address: "",
+  coordinates: "",
+  lastUpdated: "Just now",
 };
 
 // Real-time weather update
 function updateWeather(lat, lon) {
-    const weatherInfo = document.getElementById('weather-info');
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_CONFIG.WEATHER_API_KEY}`;
+  const weatherInfo = document.getElementById("weather-info");
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_CONFIG.WEATHER_API_KEY}`;
 
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-          const temperature = Math.round(data.main?.temp ?? 25);
-          const condition = data.weather?.[0]?.description ?? "Clear";
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const temperature = Math.round(data.main?.temp ?? 25);
+      const condition = data.weather?.[0]?.description ?? "Clear";
 
-          weatherInfo.innerHTML = `
+      weatherInfo.innerHTML = `
               <div class="weather-display">
                   <div class="temperature">${temperature}°C</div>
                   <div class="condition">${condition}</div>
               </div>
           `;
-      })
-      .catch(err => {
-          console.error("Weather API error:", err);
-              // If weather API fails, render a local fallback so the UI keeps showing a nice card
-              renderFallbackWeather(weatherInfo);
-      });
+    })
+    .catch((err) => {
+      console.error("Weather API error:", err);
+      // If weather API fails, render a local fallback so the UI keeps showing a nice card
+      renderFallbackWeather(weatherInfo);
+    });
 }
 
-    // Render a fallback weather card when API or geolocation is not available
-    function renderFallbackWeather(container) {
-        if(!container) return;
-        container.innerHTML = `
+// Render a fallback weather card when API or geolocation is not available
+function renderFallbackWeather(container) {
+  if (!container) return;
+  container.innerHTML = `
             <div class="weather-display">
                 <div class="temperature">10°C</div>
                 <div class="condition">scattered clouds</div>
             </div>
         `;
-    }
+}
 
 // Real-time GPS location + OpenCage reverse geocoding
 function getCurrentLocation() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            function(position) {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
+  updateWeather(43, -74); // updated here
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function (position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
 
-                currentLocation.coordinates = `${lat.toFixed(6)}° N, ${lon.toFixed(6)}° W`;
-                currentLocation.lastUpdated = "Just now";
+        currentLocation.coordinates = `${lat.toFixed(6)}° N, ${lon.toFixed(
+          6
+        )}° W`;
+        currentLocation.lastUpdated = "Just now";
 
-                updateWeather(lat, lon); // updated here
-
-                // Real reverse geocoding
-                fetch(`https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${GEOCODING_API_KEY}`)
-                  .then(res => res.json())
-                  .then(data => {
-                      currentLocation.address = (data.results && data.results.length > 0)
-                          ? data.results[0].formatted
-                          : "Address unavailable";
-                      updateLocationDisplay();
-                  })
-                  .catch(err => {
-                      console.error("Geocoding API error:", err);
-                      currentLocation.address = "Address unavailable";
-                      updateLocationDisplay();
-                  });
-            },
-            function(error) {
-                console.error("Error getting location:", error);
-                currentLocation.address = "Location unavailable";
-                currentLocation.coordinates = "GPS not available";
-                currentLocation.lastUpdated = "Error";
-                updateLocationDisplay();
-                // Ensure weather still shows something useful if location denied
-                const weatherInfo = document.getElementById('weather-info');
-                renderFallbackWeather(weatherInfo);
-            },
-            { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
-        );
-    } else {
-        currentLocation.address = "Geolocation not supported";
-        currentLocation.coordinates = "Browser not supported";
+        // Real reverse geocoding
+        fetch(
+          `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${GEOCODING_API_KEY}`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            currentLocation.address =
+              data.results && data.results.length > 0
+                ? data.results[0].formatted
+                : "Address unavailable";
+            updateLocationDisplay();
+          })
+          .catch((err) => {
+            console.error("Geocoding API error:", err);
+            currentLocation.address = "Address unavailable";
+            updateLocationDisplay();
+          });
+      },
+      function (error) {
+        console.error("Error getting location:", error);
+        currentLocation.address = "Location unavailable";
+        currentLocation.coordinates = "GPS not available";
         currentLocation.lastUpdated = "Error";
         updateLocationDisplay();
-        // Render fallback weather when geolocation not supported
-        const weatherInfo = document.getElementById('weather-info');
+        // Ensure weather still shows something useful if location denied
+        const weatherInfo = document.getElementById("weather-info");
         renderFallbackWeather(weatherInfo);
-    }
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
+    );
+  } else {
+    currentLocation.address = "Geolocation not supported";
+    currentLocation.coordinates = "Browser not supported";
+    currentLocation.lastUpdated = "Error";
+    updateLocationDisplay();
+    // Render fallback weather when geolocation not supported
+    const weatherInfo = document.getElementById("weather-info");
+    renderFallbackWeather(weatherInfo);
+  }
 }
 
 // Update location display
 function updateLocationDisplay() {
-    const locationInfo = document.getElementById('location-info');
-    if (locationInfo) {
-        locationInfo.innerHTML = `
+  const locationInfo = document.getElementById("location-info");
+  if (locationInfo) {
+    locationInfo.innerHTML = `
             <div class="location-display">
                 <div class="location-icon">📍</div>
                 <div class="location-text">
@@ -108,96 +112,120 @@ function updateLocationDisplay() {
                 </div>
             </div>
         `;
-    }
+  }
 }
 
 // Initialize main event
 function initializeMainEvent() {
-    const mainEvent = document.getElementById('main-event');
-    if (mainEvent) {
-        mainEvent.addEventListener('touchstart', e => {
-            e.preventDefault(); mainEvent.style.transform = 'scale(0.98)';
-        });
-        mainEvent.addEventListener('touchend', e => {
-            e.preventDefault(); mainEvent.style.transform = 'scale(1)';
-            showNotification("Casino Night Event selected!");
-        });
-        mainEvent.addEventListener('click', e => {
-            e.preventDefault();
-            showNotification("Casino Night Event selected!");
-        });
-    }
+  const mainEvent = document.getElementById("main-event");
+  if (mainEvent) {
+    mainEvent.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      mainEvent.style.transform = "scale(0.98)";
+    });
+    mainEvent.addEventListener("touchend", (e) => {
+      e.preventDefault();
+      mainEvent.style.transform = "scale(1)";
+      showNotification("Casino Night Event selected!");
+    });
+    mainEvent.addEventListener("click", (e) => {
+      e.preventDefault();
+      showNotification("Casino Night Event selected!");
+    });
+  }
 }
 
 // Hamburger menu
 function initializeHamburgerMenu() {
-    const hamburgerMenu = document.getElementById('hamburger-menu');
-    const menuOverlay = document.getElementById('menu-overlay');
-    const closeMenu = document.getElementById('close-menu');
-    const destButtons = document.querySelectorAll('.dest-btn');
+  const hamburgerMenu = document.getElementById("hamburger-menu");
+  const menuOverlay = document.getElementById("menu-overlay");
+  const closeMenu = document.getElementById("close-menu");
+  const destButtons = document.querySelectorAll(".dest-btn");
 
-    hamburgerMenu.addEventListener('click', () => menuOverlay.classList.add('active'));
-    closeMenu.addEventListener('click', () => menuOverlay.classList.remove('active'));
-    menuOverlay.addEventListener('click', e => { if(e.target===menuOverlay) menuOverlay.classList.remove('active'); });
+  hamburgerMenu.addEventListener("click", () =>
+    menuOverlay.classList.add("active")
+  );
+  closeMenu.addEventListener("click", () =>
+    menuOverlay.classList.remove("active")
+  );
+  menuOverlay.addEventListener("click", (e) => {
+    if (e.target === menuOverlay) menuOverlay.classList.remove("active");
+  });
 
-    destButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const destinationText = button.querySelector('.dest-text').textContent;
-            showNotification(`Opening ${destinationText}...`);
-            // Map data-dest or text to actual pages (preserve measures: 800x480)
-            const dest = button.getAttribute('data-dest') || destinationText.toLowerCase();
-            const pageMap = {
-                'restaurant': 'utilities.html',
-                'utilities': 'utilities.html',
-                'supermarket': 'events.html',
-                'events': 'events.html',
-                'gas-station': 'weather.html',
-                'weather': 'weather.html'
-            };
-            const target = pageMap[dest] || pageMap[destinationText.toLowerCase()] || 'index1.html';
+  destButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const destinationText = button.querySelector(".dest-text").textContent;
+      showNotification(`Opening ${destinationText}...`);
+      // Map data-dest or text to actual pages (preserve measures: 800x480)
+      const dest =
+        button.getAttribute("data-dest") || destinationText.toLowerCase();
+      const pageMap = {
+        map: "map.html",
+        utilities: "utilities.html",
+        events: "events.html",
+        weather: "weather.html",
+      };
+      const target =
+        pageMap[dest] ||
+        pageMap[destinationText.toLowerCase()] ||
+        "index1.html";
 
-            // Close overlay then navigate so users see the notification briefly
-            setTimeout(() => {
-                menuOverlay.classList.remove('active');
-                // Use a short delay before navigation so overlay animation completes
-                setTimeout(() => { window.location.href = target; }, 200);
-            }, 600);
-        });
+      // Close overlay then navigate so users see the notification briefly
+      setTimeout(() => {
+        menuOverlay.classList.remove("active");
+        // Use a short delay before navigation so overlay animation completes
+        setTimeout(() => {
+          window.location.href = target;
+        }, 200);
+      }, 600);
     });
+  });
 }
 
 // Notification
 function showNotification(message) {
-    const existing = document.querySelector('.notification'); if(existing) existing.remove();
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = message;
-    notification.style.cssText = `
+  const existing = document.querySelector(".notification");
+  if (existing) existing.remove();
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  notification.textContent = message;
+  notification.style.cssText = `
         position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
         background: #667eea; color: white; padding: 12px 24px;
         border-radius: 25px; font-size: 14px; font-weight: 600;
         box-shadow: 0 4px 20px rgba(102,126,234,0.4); z-index: 2000;
     `;
-    document.body.appendChild(notification);
-    setTimeout(()=>notification.remove(), 3000);
+  document.body.appendChild(notification);
+  setTimeout(() => notification.remove(), 3000);
 }
 
 // Prevent default touch behaviors
 function preventDefaultTouchBehaviors() {
-    document.addEventListener('touchend', e => {
-        const now = (new Date()).getTime();
-        if (this.lastTouchEnd && now - this.lastTouchEnd <= 300) e.preventDefault();
-        this.lastTouchEnd = now;
-    }, false);
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('selectstart', e => e.preventDefault());
-    document.addEventListener('touchmove', e => { if(e.touches.length>1) e.preventDefault(); }, {passive:false});
+  document.addEventListener(
+    "touchend",
+    (e) => {
+      const now = new Date().getTime();
+      if (this.lastTouchEnd && now - this.lastTouchEnd <= 300)
+        e.preventDefault();
+      this.lastTouchEnd = now;
+    },
+    false
+  );
+  document.addEventListener("contextmenu", (e) => e.preventDefault());
+  document.addEventListener("selectstart", (e) => e.preventDefault());
+  document.addEventListener(
+    "touchmove",
+    (e) => {
+      if (e.touches.length > 1) e.preventDefault();
+    },
+    { passive: false }
+  );
 }
 
 // Initialize app
-document.addEventListener('DOMContentLoaded', function() {
-    initializeMainEvent();
-    getCurrentLocation();
-    initializeHamburgerMenu();
-    preventDefaultTouchBehaviors();
+document.addEventListener("DOMContentLoaded", function () {
+  initializeMainEvent();
+  getCurrentLocation();
+  initializeHamburgerMenu();
+  preventDefaultTouchBehaviors();
 });

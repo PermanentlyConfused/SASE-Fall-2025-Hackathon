@@ -1,83 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=800, height=480, initial-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=800, height=480, initial-scale=1.0, user-scalable=no" />
     <title>GPS Home Assistant</title>
-    <link rel="stylesheet" href="styles1.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles1.css" />
+    <script src="main1.js"></script>
+  </head>
+  <body>
     <!-- Header (60px height) -->
     <header>
-        <div class="header-content">
-            <h1>GPS Home Assistant</h1>
-            <div class="hamburger-menu" id="hamburger-menu">
-                <div class="hamburger-icon">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
+      <div class="header-content">
+        <h1>Home-me</h1>
+        <div class="hamburger-menu" id="hamburger-menu">
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
+      </div>
     </header>
 
     <!-- Main Content Container -->
     <div class="main-container">
-        <!-- Main Event Section (200px height) -->
-        <section id="main-event">
-            <div class="event-background">
-                <div class="event-overlay">
-                    <div class="event-content">
-                        <h2>🎰 Casino Night Event</h2>
-                        <p class="event-description">Today this event is happening in your area</p>
-                    </div>
-                </div>
+      <!-- Main Event Section (200px height) -->
+      <section id="main-event">
+        <div class="event-background">
+          <div class="event-overlay">
+            <div class="event-content">
+              <h2>🎰 Casino Night Event</h2>
+              <p class="event-description">
+                Today this event is happening in your area
+              </p>
             </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        <!-- Weather Section (100px height) -->
-        <section id="weather">
-            <div class="section-header">
-                <h2>🌤️ Weather</h2>
-            </div>
-            <div id="weather-info">
-            </div>
-        </section>
+      <!-- Weather Section (100px height) -->
+      <section id="weather">
+        <div class="section-header">
+          <h2>🌤️ Weather</h2>
+        </div>
+        <div id="weather-info"></div>
+      </section>
 
-        <!-- Location Section (80px height) -->
-        <section id="location">
-            <div class="section-header">
-                <h2>📍 Current Location</h2>
-            </div>
-            <div id="location-info">
-            </div>
-        </section>
-    </div>
+      <!-- Location Section (80px height)
+      <section id="location">
+        <div class="section-header">
+          <h2>📍 Current Location</h2>
+        </div>
+        <div id="location-info"></div>
+      </section>
+    </div> -->
 
     <!-- Hamburger Menu Overlay -->
     <div class="menu-overlay" id="menu-overlay">
-        <div class="menu-content">
-            <div class="menu-header">
-                <h3>🎯 Select Destination</h3>
-                <button class="close-menu" id="close-menu">✕</button>
-            </div>
-            <div class="destination-buttons">
-                <button class="dest-btn" data-dest="restaurant">
-                    <span class="dest-icon">⚙️</span>
-                    <span class="dest-text">Utilities</span>
-                </button>
-                <button class="dest-btn" data-dest="supermarket">
-                    <span class="dest-icon">🎭</span>
-                    <span class="dest-text">Events</span>
-                </button>
-                <button class="dest-btn" data-dest="gas-station">
-                    <span class="dest-icon">🌤️</span>
-                    <span class="dest-text">Weather</span>
-                </button>
-            </div>
+      <div class="menu-content">
+        <div class="menu-header">
+          <h3>🎯 Select Destination</h3>
+          <button class="close-menu" id="close-menu">✕</button>
         </div>
+        <div class="destination-buttons">
+          <button class="dest-btn" data-dest="map">
+            <span class="dest-icon">🗺</span>
+            <span class="dest-text">Map</span>
+          </button>
+          <button class="dest-btn" data-dest="ultilities">
+            <span class="dest-icon">⚙️</span>
+            <span class="dest-text">Utilities</span>
+          </button>
+          <button class="dest-btn" data-dest="events">
+            <span class="dest-icon">🎭</span>
+            <span class="dest-text">Events</span>
+          </button>
+          <button class="dest-btn" data-dest="weather">
+            <span class="dest-icon">🌤️</span>
+            <span class="dest-text">Weather</span>
+          </button>
+        </div>
+      </div>
     </div>
-
-    <script src="main1.js"></script>
-</body>
+  </body>
 </html>
