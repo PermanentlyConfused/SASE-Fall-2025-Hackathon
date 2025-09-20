@@ -42,7 +42,9 @@ CREATE TABLE Events (
     Description TEXT,
     Address TEXT,
     Date DATE,
-    Time TIME
+    Time TIME,    
+    Lat NUMERIC(9,7)
+    Long NUMERIC(9,7)
 );
 
 CREATE TABLE Hobby_Events (
