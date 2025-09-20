@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Scoops Downtown",
+    "lat": 44.6688614,
+    "lon": -74.9854007,
+    "type": "cafe"
+  },
+  {
+    "name": "Park Bros Coffee",
+    "lat": 44.6688098,
+    "lon": -74.9863469,
+    "type": "cafe"
+  },
+  {
+    "name": "Jernabi Coffee",
+    "lat": 44.6679888,
+    "lon": -74.9883151,
+    "type": "cafe"
+  }
+]
