@@ -7,6 +7,8 @@ CREATE TABLE HomeProfile (
     StateProvince VARCHAR(100),
     Town VARCHAR(100),
     Color VARCHAR(50),
+    Lat NUMERIC(9,7)
+    Long NUMERIC(9,7)
     Ownership TEXT  
 );
 
