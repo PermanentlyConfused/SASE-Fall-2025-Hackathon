@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=800, height=480, initial-scale=1.0, user-scalable=no" />
+    <title>Map</title>
+    <link rel="stylesheet" href="styles1.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""></script>
+    <style>
+      #map {
+        width: 750px;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1>Map</h1>
+        <a class="back-link" href="index1.html">🏠 Back</a>
+      </div>
+    </header>
+
+    <main>
+      <section
+        id="content"
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding-top: 10px;
+        ">
+        <div id="map"></div>
+      </section>
+    </main>
+
+    <!-- <script src="main1.js"></script> -->
+  </body>
+  <script>
+    const map = L.map("map");
+    const currentLoc = [44.6698, -74.9813];
+    const indiaGrill = [44.6688102, -74.9864899];
+    map.setView(currentLoc, 17);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution:
+        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    }).addTo(map);
+
+    LocMarker = L.marker(currentLoc, {
+      title: "Current Location",
+      color: "blue",
+    }).addTo(map);
+
+    var popup = L.popup()
+      .setLatLng(indiaGrill)
+      .setContent("Indian Grill")
+      .openOn(map);
+  </script>
+</html>

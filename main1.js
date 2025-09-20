@@ -160,11 +160,9 @@ function initializeHamburgerMenu() {
       const dest =
         button.getAttribute("data-dest") || destinationText.toLowerCase();
       const pageMap = {
-        restaurant: "utilities.html",
+        map: "map.html",
         utilities: "utilities.html",
-        supermarket: "events.html",
         events: "events.html",
-        "gas-station": "weather.html",
         weather: "weather.html",
       };
       const target =
