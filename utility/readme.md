@@ -1,7 +1,7 @@
 Availible utilities: </br>
 - Electric
-- Gas
-Only for New York State
-Other utilities to consider:
+- Gas </br>
+Only for New York State </br>
+Other utilities to consider: </br>
 - ISP
 - Water
