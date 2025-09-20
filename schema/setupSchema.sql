@@ -9,8 +9,7 @@ CREATE TABLE HomeProfile (
     Town VARCHAR(100),
     Color VARCHAR(50),
     Lat NUMERIC(9,7),
-    Long NUMERIC(9,7),
-    Ownership TEXT
+    Long NUMERIC(9,7)
 );
 
 CREATE TABLE Hobbies (
