@@ -1,2 +1,3 @@
 .venv
 SetupDB_output.log
+.env
