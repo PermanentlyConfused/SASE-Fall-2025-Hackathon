@@ -45,59 +45,23 @@ function renderFallbackWeather(container) {
         `;
 }
 
+function getTownData(lat, lon) {
+  const help = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=${API_CONFIG.WEATHER_API_KEY}`;
+  fetch(help)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Weather API response:", data); // This will log everything from the response
+    })
+    .catch((err) => {
+      console.error("Weather API error:", err);
+      // If weather API fails, render a local fallback so the UI keeps showing a nice card
+      renderFallbackWeather(weatherInfo);
+    });
+}
 // Real-time GPS location + OpenCage reverse geocoding
 function getCurrentLocation() {
-  updateWeather(43, -74); // updated here
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      function (position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-
-        currentLocation.coordinates = `${lat.toFixed(6)}° N, ${lon.toFixed(
-          6
-        )}° W`;
-        currentLocation.lastUpdated = "Just now";
-
-        // Real reverse geocoding
-        fetch(
-          `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${GEOCODING_API_KEY}`
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            currentLocation.address =
-              data.results && data.results.length > 0
-                ? data.results[0].formatted
-                : "Address unavailable";
-            updateLocationDisplay();
-          })
-          .catch((err) => {
-            console.error("Geocoding API error:", err);
-            currentLocation.address = "Address unavailable";
-            updateLocationDisplay();
-          });
-      },
-      function (error) {
-        console.error("Error getting location:", error);
-        currentLocation.address = "Location unavailable";
-        currentLocation.coordinates = "GPS not available";
-        currentLocation.lastUpdated = "Error";
-        updateLocationDisplay();
-        // Ensure weather still shows something useful if location denied
-        const weatherInfo = document.getElementById("weather-info");
-        renderFallbackWeather(weatherInfo);
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
-    );
-  } else {
-    currentLocation.address = "Geolocation not supported";
-    currentLocation.coordinates = "Browser not supported";
-    currentLocation.lastUpdated = "Error";
-    updateLocationDisplay();
-    // Render fallback weather when geolocation not supported
-    const weatherInfo = document.getElementById("weather-info");
-    renderFallbackWeather(weatherInfo);
-  }
+  updateWeather(44.6698, -74.9813); // updated here
+  getTownData(44.6698, -74.9813);
 }
 
 // Update location display
