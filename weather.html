@@ -16,15 +16,20 @@
 
     <main>
         <section id="content">
-            <h2>Current Weather</h2>
-            <div id="weather-detail">
-                <p>Temperature: 25°C</p>
-                <p>Condition: Sunny</p>
-                <p>Humidity: 40%</p>
+            <div class="weather-container">
+                <div class="weather-card">
+                    <div class="weather-icon">☀️</div>
+                    <div class="weather-info">
+                        <h2>Current Weather</h2>
+                        <span id="temperature">Temperature: --</span>
+                        <span id="condition">Condition: --</span>
+                        <span id="humidity">Humidity: --</span>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <script src="main1.js"></script>
+    <script src="weather.js"></script>
 </body>
 </html>
