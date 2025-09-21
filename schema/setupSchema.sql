@@ -37,7 +37,7 @@ CREATE TABLE Utilities (
     Company VARCHAR(100),
     PhoneNumber VARCHAR(20),
     UtilityType VARCHAR(50),
-    Payment DECIMAL(10,2)
+    Payment BOOLEAN,
 );
 
 CREATE TABLE HomeProfile_Utilities (
