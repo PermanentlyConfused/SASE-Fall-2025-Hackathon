@@ -1,3 +1,7 @@
+DROP DATABASE home_db;
+CREATE DATABASE home_db;
+\c home_db;
+
 CREATE TABLE Hobbies (
     HobbyID SERIAL PRIMARY KEY,
     HobbyName VARCHAR(100) UNIQUE NOT NULL
