@@ -93,7 +93,6 @@ async function initMapAndData() {
     const osmMap = L.tileLayer(
       "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
       {
-        maxZoom: 15,
         attribution:
           '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }
@@ -101,7 +100,8 @@ async function initMapAndData() {
 
     const map = L.map("map", {
       center: [currentLoc.lat, currentLoc.lng],
-      zoom: 19,
+      zoom: 15,
+
       layers: [osmMap],
     });
 
