@@ -14,7 +14,7 @@ async function loadEvents() {
       const category = item.Category.toLowerCase();
 
       switch (category) {
-        case "food":
+        case "foods":
           RestaurantList.push(
             L.marker([lat, lng]).bindPopup(`This is ${description}`)
           );
@@ -24,10 +24,10 @@ async function loadEvents() {
             L.marker([lat, lng]).bindPopup(`This is ${description}`)
           );
           break;
-        case "event":
-          EventsList.push(
-            L.marker([lat, lng]).bindPopup(`This is ${description}`)
-          );
+        case "events":
+          // EventsList.push(
+          //   L.marker([lat, lng]).bindPopup(`This is ${description}`)
+          // );
           break;
         default:
           console.warn(`Unknown category: ${item.Category}`);
