@@ -43,7 +43,7 @@ def updateHomeProfile()->int:
 
         result = cur.fetchone()
         home_id, was_inserted = result
-        print(home_id,was_inserted)
+        # print(home_id,was_inserted)
         
         if not was_inserted:
             raise ValueError(f"Conflict: Town '{city}' already exists in the database.")
