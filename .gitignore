@@ -1,4 +1,5 @@
 .venv
 SetupDB_output.log
 .env
+Sase
 src/__pycache__
