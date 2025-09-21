@@ -2,6 +2,7 @@ DROP DATABASE home_db;
 CREATE DATABASE home_db;
 \c home_db;
 
+
 CREATE TABLE HomeProfile (
     HomeID SERIAL PRIMARY KEY,
     Country VARCHAR(100),
@@ -11,6 +12,13 @@ CREATE TABLE HomeProfile (
     Lat NUMERIC(9,7),
     Long NUMERIC(9,7)
 );
+
+--If we were to scale this application then we would modify this into a Users table and their respective selected Profile.
+CREATE TABLE SelectedProfile(
+    HomeID INT 
+);
+
+INSERT INTO SelectedProfile (HomeID) VALUES (NULL);
 
 CREATE TABLE Hobbies (
     HobbyID SERIAL PRIMARY KEY,

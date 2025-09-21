@@ -1,4 +1,4 @@
-from src.SerialGPS import read_serial_data
+from SerialGPS import read_serial_data
 from dotenv import load_dotenv
 import os
 import urllib.request
@@ -31,19 +31,25 @@ def updateHomeProfile()->int:
     city = data[0]['name']
     state = data[0]['state']
     try:
+        #! Theres a bug here with homeID incrementing even when the call should have been aborted.
         cur = conn.cursor()
         cur.execute("""
             INSERT INTO HomeProfile (Country, StateProvince, Town, Color, Lat, Long)
             VALUES (%s, %s, %s, %s, %s, %s)
             ON CONFLICT (Town) DO UPDATE
                 SET Town = EXCLUDED.Town
-            RETURNING xmax = 0;
+            RETURNING HomeID, xmax = 0;
         """, (country, state, city, 'white', currentLocation[0], currentLocation[1]))
 
-        was_inserted = cur.fetchone()[0]
-
+        result = cur.fetchone()
+        home_id, was_inserted = result
+        print(home_id,was_inserted)
+        
         if not was_inserted:
             raise ValueError(f"Conflict: Town '{city}' already exists in the database.")
+        
+        cur.execute("""UPDATE SelectedProfile SET HomeID = %s""", (home_id,))
+                
         conn.commit()
         rVal = 0
     except ValueError as e:
