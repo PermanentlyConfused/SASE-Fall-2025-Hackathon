@@ -22,11 +22,13 @@ app.use(cors());
 
 app.get(`/events`, async (req, res) => {
   try {
-    const QueryRes = await pool.query("SELECT * FROM Events");
+    const QueryRes = await pool.query(
+      "SELECT e.* FROM Events e JOIN SelectedProfile sp ON TRUE JOIN HomeProfile hp ON hp.HomeID = sp.HomeID WHERE ABS(e.Lat - hp.Lat) <= 0.5 AND ABS(e.Long - hp.Long) <= 0.5;"
+    );
     if (QueryRes.rows.length > 0) {
       var payload = [];
       for (const row of QueryRes.rows) {
-        console.log(row);
+        // console.log(row);
         payload.push({
           Category: row.category,
           Description: row.description,
@@ -35,7 +37,7 @@ app.get(`/events`, async (req, res) => {
           Long: row.long,
         });
       }
-      console.log(payload);
+      //   console.log(payload);
       res.status(200).json({ payload });
     } else {
       res.status(401).json({ message: "Invalid req" });

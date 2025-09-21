@@ -41,6 +41,7 @@ async function loadEvents() {
 // Call the function and wait for it to finish
 loadEvents().then(() => {
   console.log("Events loaded successfully.");
+  // console.log(RestaurantList.length);
   var Attractions = L.layerGroup(AttractionList);
   var Restaurants = L.layerGroup(RestaurantList);
   var Events = L.layerGroup(EventsList);
