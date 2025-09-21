@@ -79,7 +79,7 @@ app.get(`/getSavedHobbies`, async (req, res) => {
     if (QueryRes.rows.length > 0) {
       var payload = [];
       for (const row of QueryRes.rows) {
-        // console.log(row);
+        console.log(row);
         payload.push({
           hobbiesString: row.hobbies,
         });

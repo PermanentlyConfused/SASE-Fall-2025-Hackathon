@@ -55,3 +55,27 @@ document.getElementById("hobbyForm").addEventListener("submit", async (e) => {
 });
 
 loadEvents();
+
+async function checkSavedHobbies() {
+  try {
+    const response = await fetch("http://127.0.0.1:8080/getSavedHobbies");
+    const result = await response.json();
+
+    if (result.payload && result.payload.length > 0) {
+      const hobbiesString = result.payload[0].hobbiesString;
+      if (hobbiesString == null) {
+        console.log("No saved hobbies yet ");
+        return;
+      }
+      console.log("Raw hobbies string from DB:", hobbiesString);
+
+      const savedHobbyIds = hobbiesString.split(",").map((id) => parseInt(id));
+      console.log("Parsed saved hobby IDs:", savedHobbyIds);
+    } else {
+      console.warn("No saved hobbies returned.");
+    }
+  } catch (error) {
+    console.error("Error fetching saved hobbies:", error);
+  }
+}
+checkSavedHobbies();
