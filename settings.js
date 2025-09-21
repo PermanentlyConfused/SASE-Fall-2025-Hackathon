@@ -1,6 +1,6 @@
 async function loadEvents() {
   try {
-    const response = await fetch("http://127.0.0.1:8080/getHobbies");
+    const response = await fetch("http://127.0.0.1:8081/getHobbies");
     const result = await response.json();
     const hobbies = result.payload;
 
@@ -37,7 +37,7 @@ document.getElementById("hobbyForm").addEventListener("submit", async (e) => {
   console.log("Selected hobbies:", selected);
 
   try {
-    const response = await fetch("http://127.0.0.1:8080/saveHobbies", {
+    const response = await fetch("http://127.0.0.1:8081/saveHobbies", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ document.getElementById("hobbyForm").addEventListener("submit", async (e) => {
 
 async function checkSavedHobbies() {
   try {
-    const response = await fetch("http://127.0.0.1:8080/getSavedHobbies");
+    const response = await fetch("http://127.0.0.1:8081/getSavedHobbies");
     const result = await response.json();
 
     if (result.payload && result.payload.length > 0) {

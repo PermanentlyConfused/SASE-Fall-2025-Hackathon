@@ -4,7 +4,7 @@ var EventsList = [];
 
 async function loadEvents() {
   try {
-    const response = await fetch("http://127.0.0.1:8080/Events");
+    const response = await fetch("http://127.0.0.1:8081/Events");
     const data = await response.json();
     const attractionIcon = L.icon({
       iconUrl: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
@@ -68,7 +68,7 @@ async function loadEvents() {
 // ✳️ Modify to just return location (no need for map yet)
 async function getCurrentLocation() {
   try {
-    const response = await fetch("http://127.0.0.1:8080/currentLoc");
+    const response = await fetch("http://127.0.0.1:8081/currentLoc");
     const data = await response.json();
     if (data.payload.length > 0) {
       const item = data.payload[0]; // assuming only one location
