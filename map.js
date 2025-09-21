@@ -6,6 +6,26 @@ async function loadEvents() {
   try {
     const response = await fetch("http://127.0.0.1:8080/Events");
     const data = await response.json();
+    const attractionIcon = L.icon({
+      iconUrl: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    });
+
+    const restaurantIcon = L.icon({
+      iconUrl: "https://maps.google.com/mapfiles/ms/icons/green-dot.png",
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    });
+
+    const eventIcon = L.icon({
+      iconUrl: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32],
+    });
 
     for (let i = 0; i < data.payload.length; i++) {
       const item = data.payload[i];
@@ -17,17 +37,23 @@ async function loadEvents() {
       switch (category) {
         case "foods":
           RestaurantList.push(
-            L.marker([lat, lng]).bindPopup(`Food: ${description}`)
+            L.marker([lat, lng], { icon: restaurantIcon }).bindPopup(
+              `Food: ${description}`
+            )
           );
           break;
         case "attractions":
           AttractionList.push(
-            L.marker([lat, lng]).bindPopup(`Attraction: ${description}`)
+            L.marker([lat, lng], { icon: attractionIcon }).bindPopup(
+              `Attraction: ${description}`
+            )
           );
           break;
         case "events":
           EventsList.push(
-            L.marker([lat, lng]).bindPopup(`Event!: ${description}`)
+            L.marker([lat, lng], { icon: eventIcon }).bindPopup(
+              `Event!: ${description}`
+            )
           );
           break;
         default:
