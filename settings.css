@@ -1,0 +1,62 @@
+main {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+#hobbyForm {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#hobbyList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 10px;
+  justify-content: center;
+}
+
+#hobbyList label {
+  flex: 0 1 calc(33.33% - 20px);
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: #007acc;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 16px;
+  text-align: center;
+}
+
+#hobbyList input[type="checkbox"] {
+  display: none;
+}
+
+#hobbyList input[type="checkbox"]:checked + label {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+#hobbyList input[type="checkbox"]:not(:checked) + label:hover {
+  background-color: #005fa3;
+}
+
+button[type="submit"] {
+  margin-top: 20px;
+  margin-left: 240px;
+  background-color: #8f349b;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+  background-color: #005fa3;
+}

@@ -18,6 +18,7 @@ const options = { family: 4 };
 const port = 8080;
 const app = express();
 app.use(cors());
+app.use(express.json());
 
 app.get(`/events`, async (req, res) => {
   try {
@@ -41,6 +42,45 @@ app.get(`/events`, async (req, res) => {
     } else {
       res.status(401).json({ message: "Invalid req" });
     }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: "Error: ", error: err.message });
+  }
+});
+
+app.get(`/getHobbies`, async (req, res) => {
+  try {
+    const QueryRes = await pool.query("SELECT * FROM Hobbies");
+    if (QueryRes.rows.length > 0) {
+      var payload = [];
+      for (const row of QueryRes.rows) {
+        // console.log(row);
+        payload.push({
+          hobbyid: row.hobbyid,
+          hobbyname: row.hobbyname,
+        });
+      }
+      // console.log(payload);
+      res.status(200).json({ payload });
+    } else {
+      res.status(401).json({ message: "Invalid req" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: "Error: ", error: err.message });
+  }
+});
+
+app.post(`/saveHobbies`, async (req, res) => {
+  try {
+    const { hobbies } = req.body;
+    const hobbiesString = hobbies.join(", ");
+    // console.log(hobbiesString);
+    const QueryRes = await pool.query(
+      `UPDATE HomeProfile SET Hobbies = '${hobbiesString}' WHERE HomeID = (SELECT HomeID FROM SelectedProfile LIMIT 1);`
+    );
+
+    res.status(200).json({});
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: "Error: ", error: err.message });
