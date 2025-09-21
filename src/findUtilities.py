@@ -36,6 +36,8 @@ def get_utilities_by_type_for_point(lat, lon, df, geom_col='the_geom'):
     
     return electric_ids, gas_ids
 
+
+# I need the HomeProfile's HomeID, Lat, Long
 conn = psycopg2.connect(
     dbname="home_db",
     user="postgres",
@@ -43,8 +45,6 @@ conn = psycopg2.connect(
     host="localhost",
     port="5432"
 )
-
-# I need the HomeProfile's HomeID, Lat, Long
 with conn.cursor() as c:
     c.execute("SELECT HomeID, Lat, Long FROM HomeProfile")
     events = c.fetchall()
@@ -54,7 +54,10 @@ test_points = []
 for i in events:
     homeID, lat, long = i
     test_points = test_points.append((lat, long))
-
+    
+#test_points = [(44.6642656, -74.972129)]
+#homeID = 1
+results = []
 for lat, lon in test_points:
     # Get utility IDs separated by type
     elec_utility_ids, gas_utility_ids = get_utilities_by_type_for_point(lat, lon, utilities)
