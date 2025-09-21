@@ -71,6 +71,30 @@ app.get(`/getHobbies`, async (req, res) => {
   }
 });
 
+app.get(`/getSavedHobbies`, async (req, res) => {
+  try {
+    const QueryRes = await pool.query(
+      "SELECT hobbies FROM HomeProfile WHERE HomeID = (SELECT HomeID FROM SelectedProfile LIMIT 1);"
+    );
+    if (QueryRes.rows.length > 0) {
+      var payload = [];
+      for (const row of QueryRes.rows) {
+        // console.log(row);
+        payload.push({
+          hobbiesString: row.hobbies,
+        });
+      }
+      // console.log(payload);
+      res.status(200).json({ payload });
+    } else {
+      res.status(401).json({ message: "Invalid req" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: "Error: ", error: err.message });
+  }
+});
+
 app.post(`/saveHobbies`, async (req, res) => {
   try {
     const { hobbies } = req.body;
