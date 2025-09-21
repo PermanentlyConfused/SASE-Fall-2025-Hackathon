@@ -1,7 +1,6 @@
 const { Pool } = require("pg");
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 
 const pool = new Pool({
   user: "postgres",
@@ -33,6 +32,31 @@ app.get(`/events`, async (req, res) => {
           Category: row.category,
           Description: row.description,
           Address: row.address,
+          Lat: row.lat,
+          Long: row.long,
+        });
+      }
+      //   console.log(payload);
+      res.status(200).json({ payload });
+    } else {
+      res.status(401).json({ message: "Invalid req" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: "Error: ", error: err.message });
+  }
+});
+
+app.get(`/currentloc`, async (req, res) => {
+  try {
+    const QueryRes = await pool.query(
+      "SELECT hp.Lat, hp.Long FROM SelectedProfile sp JOIN HomeProfile hp ON sp.HomeID = hp.HomeID LIMIT 1;"
+    );
+    if (QueryRes.rows.length > 0) {
+      var payload = [];
+      for (const row of QueryRes.rows) {
+        // console.log(row);
+        payload.push({
           Lat: row.lat,
           Long: row.long,
         });

@@ -1,6 +1,7 @@
 var AttractionList = [];
 var RestaurantList = [];
 var EventsList = [];
+
 async function loadEvents() {
   try {
     const response = await fetch("http://127.0.0.1:8080/Events");
@@ -25,9 +26,9 @@ async function loadEvents() {
           );
           break;
         case "events":
-          // EventsList.push(
-          //   L.marker([lat, lng]).bindPopup(`This is ${description}`)
-          // );
+          EventsList.push(
+            L.marker([lat, lng]).bindPopup(`This is ${description}`)
+          );
           break;
         default:
           console.warn(`Unknown category: ${item.Category}`);
@@ -38,39 +39,77 @@ async function loadEvents() {
   }
 }
 
-// Call the function and wait for it to finish
-loadEvents().then(() => {
-  console.log("Events loaded successfully.");
-  // console.log(RestaurantList.length);
-  var Attractions = L.layerGroup(AttractionList);
-  var Restaurants = L.layerGroup(RestaurantList);
-  var Events = L.layerGroup(EventsList);
-
-  osmMap = L.tileLayer(
-    "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-    {
-      maxZoom: 19,
-      attribution:
-        '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+// ✳️ Modify to just return location (no need for map yet)
+async function getCurrentLocation() {
+  try {
+    const response = await fetch("http://127.0.0.1:8080/currentLoc");
+    const data = await response.json();
+    if (data.payload.length > 0) {
+      const item = data.payload[0]; // assuming only one location
+      return {
+        lat: parseFloat(item.Lat),
+        lng: parseFloat(item.Long),
+      };
+    } else {
+      throw new Error("No location data received.");
     }
-  );
-  var baseMaps = {
-    OpenStreetMap: osmMap,
-  };
-  var overlayMaps = {
-    Attractions: Attractions,
-    Restaurants: Restaurants,
-    Events: Events,
-  };
-  const map = L.map("map", {
-    center: [44.6698, -74.9813],
-    zoom: 16,
-    layers: [osmMap, Attractions, Restaurants, Events],
-  });
-  LocMarker = L.marker([44.6698, -74.9813], {
-    title: "Current Location",
-    color: "blue",
-  }).addTo(map);
+  } catch (error) {
+    console.error("Error fetching current location:", error);
+    // fallback coordinates
+    return { lat: 44.6698, lng: -74.9813 };
+  }
+}
 
-  var layerControl = L.control.layers(baseMaps, overlayMaps).addTo(map);
-});
+async function initMapAndData() {
+  try {
+    const currentLoc = await getCurrentLocation();
+
+    const osmMap = L.tileLayer(
+      "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+      {
+        maxZoom: 15,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }
+    );
+
+    const map = L.map("map", {
+      center: [currentLoc.lat, currentLoc.lng],
+      zoom: 19,
+      layers: [osmMap],
+    });
+
+    L.marker([currentLoc.lat, currentLoc.lng], {
+      title: "Current Location",
+    }).addTo(map);
+
+    await loadEvents();
+
+    // Create and add layers
+    const Attractions = L.layerGroup(AttractionList);
+    const Restaurants = L.layerGroup(RestaurantList);
+    const Events = L.layerGroup(EventsList);
+
+    Attractions.addTo(map);
+    Restaurants.addTo(map);
+    Events.addTo(map);
+
+    const baseMaps = {
+      OpenStreetMap: osmMap,
+    };
+
+    const overlayMaps = {
+      Attractions: Attractions,
+      Restaurants: Restaurants,
+      Events: Events,
+    };
+
+    L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+    console.log("Map and data loaded successfully.");
+  } catch (error) {
+    console.error("Error initializing map:", error);
+  }
+}
+
+initMapAndData();
