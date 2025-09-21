@@ -17,17 +17,17 @@ async function loadEvents() {
       switch (category) {
         case "foods":
           RestaurantList.push(
-            L.marker([lat, lng]).bindPopup(`This is ${description}`)
+            L.marker([lat, lng]).bindPopup(`Food: ${description}`)
           );
           break;
         case "attractions":
           AttractionList.push(
-            L.marker([lat, lng]).bindPopup(`This is ${description}`)
+            L.marker([lat, lng]).bindPopup(`Attraction: ${description}`)
           );
           break;
         case "events":
           EventsList.push(
-            L.marker([lat, lng]).bindPopup(`This is ${description}`)
+            L.marker([lat, lng]).bindPopup(`Event!: ${description}`)
           );
           break;
         default:
