@@ -14,6 +14,8 @@ conn = psycopg2.connect(
     port="5432"
 )
 
+
+#? This function should be called every 24hrs to update location
 def updateHomeProfile()->int:
     """ Returns: 0(Updated HomeProfile), 1(Duplicate,No Change), 2(Error)
     """
@@ -31,7 +33,6 @@ def updateHomeProfile()->int:
     city = data[0]['name']
     state = data[0]['state']
     try:
-        #! Theres a bug here with homeID incrementing even when the call should have been aborted.
         cur = conn.cursor()
         cur.execute("""
             INSERT INTO HomeProfile (Country, StateProvince, Town, Color, Lat, Long)
@@ -55,6 +56,8 @@ def updateHomeProfile()->int:
     except ValueError as e:
         print("Custom Conflict Exception:", e)
         conn.rollback()
+        cur.execute("""UPDATE SelectedProfile SET HomeID = %s""", (home_id,))
+        conn.commit()
         rVal = 1
     except Exception as e:
         print("Error:", e)
