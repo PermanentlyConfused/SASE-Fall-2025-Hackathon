@@ -14,6 +14,7 @@
     <header>
       <div class="header-content">
         <h1>Home-me</h1>
+        <p id="currentTime" class="time-header"></p>
         <div class="hamburger-menu" id="hamburger-menu">
           <div class="hamburger-icon">
             <span></span>
@@ -72,7 +73,7 @@
             <span class="dest-text">Map</span>
           </button>
           <button class="dest-btn" data-dest="ultilities">
-            <span class="dest-icon">⚙️</span>
+            <span class="dest-icon">💧</span>
             <span class="dest-text">Utilities</span>
           </button>
           <button class="dest-btn" data-dest="events">
@@ -83,6 +84,10 @@
             <span class="dest-icon">🌤️</span>
             <span class="dest-text">Weather</span>
           </button>
+          <button class="dest-btn" data-dest="Home Profiles">
+            <span class="dest-icon">👨</span>
+            <span class="dest-text">Home Profiles</span>
+          </button>
           <button class="dest-btn" data-dest="settings">
             <span class="dest-icon">⚙</span>
             <span class="dest-text">Settings</span>
@@ -90,5 +95,23 @@
         </div>
       </div>
     </div>
+        <script>
+      function updateTime() {
+        const now = new Date();
+        const options = {
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: '2-digit',
+          hour12: true
+        };
+        const formatted = now.toLocaleString('en-US', options);
+        document.getElementById('currentTime').textContent = formatted;
+      }
+
+      updateTime();
+      setInterval(updateTime, 60000);
+    </script>
   </body>
 </html>

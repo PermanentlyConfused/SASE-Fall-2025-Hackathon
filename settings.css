@@ -3,7 +3,10 @@ main {
   overflow-y: auto;
   flex: 1;
 }
-
+h1 {
+  text-align: center;
+  padding-bottom: 10px;
+}
 #hobbyForm {
   background-color: #fff;
   padding: 20px;
@@ -21,14 +24,15 @@ main {
 #hobbyList label {
   flex: 0 1 calc(33.33% - 20px);
   box-sizing: border-box;
-  padding: 5px;
-  background-color: #007acc;
+  padding: 7px;
+  background-color: #727272;
   color: white;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: 16px;
   text-align: center;
+  font-weight: 600;
 }
 
 #hobbyList input[type="checkbox"] {
@@ -36,12 +40,14 @@ main {
 }
 
 #hobbyList input[type="checkbox"]:checked + label {
-  background-color: #aaa;
+  background-color: #3eb2ff;
+  color: Black;
   cursor: not-allowed;
 }
 
 #hobbyList input[type="checkbox"]:not(:checked) + label:hover {
-  background-color: #005fa3;
+  background-color: #7c7c7c;
+  color: black;
 }
 
 button[type="submit"] {
@@ -50,7 +56,7 @@ button[type="submit"] {
   background-color: #8f349b;
   color: white;
   padding: 10px 20px;
-  font-size: 16px;
+  font-size: 18px;
   border: none;
   border-radius: 6px;
   cursor: pointer;

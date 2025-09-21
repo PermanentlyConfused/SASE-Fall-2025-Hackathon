@@ -164,6 +164,56 @@ app.post(`/saveHobbies`, async (req, res) => {
   }
 });
 
+app.get(`/getElectric`, async (req, res) => {
+  try {
+    const QueryRes = await pool.query(
+      "SELECT u.Company, u.PhoneNumber FROM Utilities u, HomeProfile h, SelectedProfile s, HomeProfile_Utilities hu WHERE s.HomeID = h.HomeID AND h.HomeID = hu.HomeID AND hu.UtilID = u.UtilID and u.UtilityType = 'electric';"
+    );
+    if (QueryRes.rows.length > 0) {
+      var payload = [];
+      for (const row of QueryRes.rows) {
+        // console.log(row);
+        payload.push({
+          utilityname: row.utilityname,
+          utilityphone: row.utilityphone,
+        });
+      }
+      // console.log(payload);
+      res.status(200).json({ payload });
+    } else {
+      res.status(401).json({ message: "Invalid req" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: "Error: ", error: err.message });
+  }
+});
+
+app.get(`/getPaymentStatusElectric`, async (req, res) => {
+  try {
+    const QueryRes = await pool.query(
+      "SELECT hu.Payment FROM Utilities u, HomeProfile h, SelectedProfile s, HomeProfile_Utilities hu WHERE s.HomeID = h.HomeID AND h.HomeID = hu.HomeID AND hu.UtilID = u.UtilID and u.UtilityType = 'gas';"
+    );
+    if (QueryRes.rows.length > 0) {
+      var payload = [];
+      for (const row of QueryRes.rows) {
+        // console.log(row);
+        payload.push({
+          utilityname: row.utilityname,
+          utilityphone: row.utilityphone,
+        });
+      }
+      // console.log(payload);
+      res.status(200).json({ payload });
+    } else {
+      res.status(401).json({ message: "Invalid req" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ message: "Error: ", error: err.message });
+  }
+});
+
 app.get(`/currentloc`, async (req, res) => {
   try {
     const QueryRes = await pool.query(
