@@ -23,7 +23,7 @@ app.use(express.json());
 app.get(`/events`, async (req, res) => {
   try {
     const QueryRes = await pool.query(
-      "SELECT e.* FROM Events e JOIN SelectedProfile sp ON TRUE JOIN HomeProfile hp ON hp.HomeID = sp.HomeID WHERE ABS(e.Lat - hp.Lat) <= 0.5 AND ABS(e.Long - hp.Long) <= 0.5;"
+      "SELECT DISTINCT e.* FROM Events e JOIN Hobby_Events he ON he.EventID = e.EventID JOIN (SELECT hp.*,unnest(string_to_array(hp.Hobbies, ','))::INT AS HobbyID FROM HomeProfile hp JOIN SelectedProfile sp ON hp.HomeID = sp.HomeID) parsed_hobbies ON parsed_hobbies.HobbyID = he.HobbyID WHERE  ABS(e.Lat - parsed_hobbies.Lat) <= 0.5 AND ABS(e.Long - parsed_hobbies.Long) <= 0.5;"
     );
     if (QueryRes.rows.length > 0) {
       var payload = [];
@@ -37,7 +37,23 @@ app.get(`/events`, async (req, res) => {
           Long: row.long,
         });
       }
-      //   console.log(payload);
+    }
+    //   console.log(payload);
+
+    const SecondRes = await pool.query(
+      "SELECT * FROM Events WHERE Category <> 'Events';"
+    );
+    if (SecondRes.rows.length > 0) {
+      for (const row of SecondRes.rows) {
+        // console.log(row);
+        payload.push({
+          Category: row.category,
+          Description: row.description,
+          Address: row.address,
+          Lat: row.lat,
+          Long: row.long,
+        });
+      }
       res.status(200).json({ payload });
     } else {
       res.status(401).json({ message: "Invalid req" });

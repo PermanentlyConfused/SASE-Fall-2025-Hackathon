@@ -54,8 +54,6 @@ document.getElementById("hobbyForm").addEventListener("submit", async (e) => {
   }
 });
 
-loadEvents();
-
 async function checkSavedHobbies() {
   try {
     const response = await fetch("http://127.0.0.1:8080/getSavedHobbies");
@@ -64,13 +62,26 @@ async function checkSavedHobbies() {
     if (result.payload && result.payload.length > 0) {
       const hobbiesString = result.payload[0].hobbiesString;
       if (hobbiesString == null) {
-        console.log("No saved hobbies yet ");
+        console.log("No saved hobbies yet");
         return;
       }
+
       console.log("Raw hobbies string from DB:", hobbiesString);
 
       const savedHobbyIds = hobbiesString.split(",").map((id) => parseInt(id));
       console.log("Parsed saved hobby IDs:", savedHobbyIds);
+
+      savedHobbyIds.forEach((id) => {
+        const checkbox = document.getElementById(`hobby-${id}`);
+        if (checkbox) {
+          checkbox.checked = true;
+
+          const label = checkbox.nextElementSibling;
+          //   if (label && label.tagName === "LABEL") {
+          //     label.style.color = "#888";
+          //   }
+        }
+      });
     } else {
       console.warn("No saved hobbies returned.");
     }
@@ -78,4 +89,8 @@ async function checkSavedHobbies() {
     console.error("Error fetching saved hobbies:", error);
   }
 }
-checkSavedHobbies();
+
+(async () => {
+  await loadEvents(); // Load hobbies
+  await checkSavedHobbies(); // Gray out selected ones
+})();
