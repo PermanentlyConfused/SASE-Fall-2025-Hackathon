@@ -59,9 +59,17 @@ function getTownData(lat, lon) {
     });
 }
 // Real-time GPS location + OpenCage reverse geocoding
-function getCurrentLocation() {
-  updateWeather(44.6698, -74.9813); // updated here
-  getTownData(44.6698, -74.9813);
+async function getCurrentLocation() {
+  const response = await fetch("http://127.0.0.1:8081/currentLoc");
+  const data = await response.json();
+  if (data.payload.length > 0) {
+    const item = data.payload[0]; // assuming only one location
+
+    lat = parseFloat(item.Lat);
+    lng = parseFloat(item.Long);
+  }
+  updateWeather(lat, lng); // updated here
+  getTownData(lat, lng);
 }
 
 // Update location display
@@ -80,22 +88,38 @@ function updateLocationDisplay() {
 }
 
 // Initialize main event
-function initializeMainEvent() {
+async function initializeMainEvent() {
   const mainEvent = document.getElementById("main-event");
-  if (mainEvent) {
-    mainEvent.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      mainEvent.style.transform = "scale(0.98)";
-    });
-    mainEvent.addEventListener("touchend", (e) => {
-      e.preventDefault();
-      mainEvent.style.transform = "scale(1)";
-      showNotification("Casino Night Event selected!");
-    });
-    mainEvent.addEventListener("click", (e) => {
-      e.preventDefault();
-      showNotification("Casino Night Event selected!");
-    });
+
+  try {
+    const response = await fetch("http://127.0.0.1:8081/getRandomEvents");
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch event data");
+    }
+
+    const { payload } = await response.json();
+
+    const eventTitleElement = mainEvent.querySelector("h2");
+    const eventDescriptionElement =
+      mainEvent.querySelector(".event-description");
+    const eventAddressElement = mainEvent.querySelector(".event-address");
+    eventTitleElement.textContent = `🎉 ${payload.Description}`;
+    eventDescriptionElement.textContent = `🗓️ ${new Date(
+      payload.StartDate
+    ).toLocaleDateString()}`;
+    eventAddressElement.textContent = `📍 ${payload.Address}`;
+  } catch (error) {
+    console.error("Error loading event:", error);
+
+    const eventDescriptionElement =
+      mainEvent.querySelector(".event-description");
+    const eventAddressElement = mainEvent.querySelector(".event-address");
+
+    eventDescriptionElement.textContent = " Could not load event details.";
+    if (eventAddressElement) {
+      eventAddressElement.textContent = "";
+    }
   }
 }
 

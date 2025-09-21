@@ -39,19 +39,18 @@ function getWeather(lat, lon) {
     });
 }
 
-function getCurrentLocationWeather() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        getWeather(position.coords.latitude, position.coords.longitude);
-      },
-      (error) => {
-        console.error("Error getting location:", error);
-        getWeather(44.662, -75.468);
-      },
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
-  } else {
+async function getCurrentLocationWeather() {
+  try {
+    const response = await fetch("http://127.0.0.1:8081/currentLoc");
+    const data = await response.json();
+    if (data.payload.length > 0) {
+      const item = data.payload[0]; // assuming only one location
+
+      lat = parseFloat(item.Lat);
+      lng = parseFloat(item.Long);
+      getWeather(lat, lng);
+    }
+  } catch (err) {
     getWeather(44.662, -75.468); // default: Potsdam
   }
 }

@@ -64,6 +64,43 @@ app.get(`/events`, async (req, res) => {
   }
 });
 
+app.get(`/getRandomEvents`, async (req, res) => {
+  try {
+    const QueryRes = await pool.query(
+      `SELECT DISTINCT e.* 
+       FROM Events e 
+       JOIN Hobby_Events he ON he.EventID = e.EventID 
+       JOIN (
+         SELECT hp.*, unnest(string_to_array(hp.Hobbies, ','))::INT AS HobbyID 
+         FROM HomeProfile hp 
+         JOIN SelectedProfile sp ON hp.HomeID = sp.HomeID
+       ) parsed_hobbies ON parsed_hobbies.HobbyID = he.HobbyID 
+       WHERE ABS(e.Lat - parsed_hobbies.Lat) <= 0.5 
+         AND ABS(e.Long - parsed_hobbies.Long) <= 0.5;`
+    );
+
+    if (QueryRes.rows.length > 0) {
+      const randomIndex = Math.floor(Math.random() * QueryRes.rows.length);
+      const row = QueryRes.rows[randomIndex];
+
+      const payload = {
+        Description: row.description,
+        Address: row.address,
+        StartDate: row.startdate,
+      };
+
+      res.status(200).json({ payload });
+    } else {
+      res.status(404).json({ message: "No events found" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: err.message });
+  }
+});
+
 app.get(`/getHobbies`, async (req, res) => {
   try {
     const QueryRes = await pool.query("SELECT * FROM Hobbies");
