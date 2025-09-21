@@ -8,6 +8,7 @@ CREATE TABLE HomeProfile (
     Country VARCHAR(100),
     StateProvince VARCHAR(100),
     Town VARCHAR(100) UNIQUE NOT NULL,
+    Hobbies TEXT,
     Color VARCHAR(50), --Maybe remove this shit later if lazy :D
     Lat NUMERIC(9,7),
     Long NUMERIC(9,7)
