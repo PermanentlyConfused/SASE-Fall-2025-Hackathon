@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=800, height=480, initial-scale=1.0, user-scalable=no" />
+    <title>Utilities</title>
+    <link rel="stylesheet" href="styles1.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1>Utilities</h1>
+        <a class="back-link" href="index.html">🏠 Back</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="utility">
+        <div class="utility-header" onclick="toggleDetails('electricity')">
+          <span>💡 <strong>Electricity</strong></span>
+          <span class="status paid" onclick="toggleStatus(this)">✔ Paid</span>
+          <span class="arrow">▶</span>
+        </div>
+        <div id="electricity" class="utility-details">
+          <p></p>
+          <p2></p2>
+        </div>
+      </section>
+
+      <section class="utility">
+        <div class="utility-header" onclick="toggleDetails('gas')">
+          <span>🔥 <strong>Gas</strong></span>
+          <span class="status unpaid" onclick="toggleStatus(this)"
+            >✖ Unpaid</span
+          >
+          <span class="arrow">▶</span>
+        </div>
+        <div id="gas" class="utility-details">
+          <p></p>
+          <p2></p2>
+        </div>
+      </section>
+    </main>
+    <script src="utilities.js"></script>
+    <script>
+      function toggleDetails(id) {
+        const section = document.getElementById(id).parentElement;
+        section.classList.toggle("open");
+      }
+    </script>
+    <script>
+      function toggleStatus(element) {
+        if (element.classList.contains("paid")) {
+          element.classList.remove("paid");
+          element.classList.add("unpaid");
+          element.textContent = "✖ Unpaid";
+        } else {
+          element.classList.remove("unpaid");
+          element.classList.add("paid");
+          element.textContent = "✔ Paid";
+        }
+      }
+    </script>
+  </body>
+</html>
