@@ -171,11 +171,12 @@ app.get(`/getElectric`, async (req, res) => {
     );
     if (QueryRes.rows.length > 0) {
       var payload = [];
+
       for (const row of QueryRes.rows) {
-        // console.log(row);
+        console.log(row);
         payload.push({
-          utilityname: row.utilityname,
-          utilityphone: row.utilityphone,
+          utilityname: row.company,
+          utilityphone: row.phonenumber,
         });
       }
       // console.log(payload);
@@ -189,18 +190,18 @@ app.get(`/getElectric`, async (req, res) => {
   }
 });
 
-app.get(`/getPaymentStatusElectric`, async (req, res) => {
+app.get(`/getGas`, async (req, res) => {
   try {
     const QueryRes = await pool.query(
-      "SELECT hu.Payment FROM Utilities u, HomeProfile h, SelectedProfile s, HomeProfile_Utilities hu WHERE s.HomeID = h.HomeID AND h.HomeID = hu.HomeID AND hu.UtilID = u.UtilID and u.UtilityType = 'gas';"
+      "SELECT u.Company, u.PhoneNumber FROM Utilities u, HomeProfile h, SelectedProfile s, HomeProfile_Utilities hu WHERE s.HomeID = h.HomeID AND h.HomeID = hu.HomeID AND hu.UtilID = u.UtilID and u.UtilityType = 'gas';"
     );
     if (QueryRes.rows.length > 0) {
       var payload = [];
       for (const row of QueryRes.rows) {
         // console.log(row);
         payload.push({
-          utilityname: row.utilityname,
-          utilityphone: row.utilityphone,
+          utilityname: row.company,
+          utilityphone: row.phonenumber,
         });
       }
       // console.log(payload);
