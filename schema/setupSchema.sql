@@ -37,12 +37,12 @@ CREATE TABLE Utilities (
     Company VARCHAR(100),
     PhoneNumber VARCHAR(20),
     UtilityType VARCHAR(50),
-    Payment BOOLEAN,
 );
 
 CREATE TABLE HomeProfile_Utilities (
     HomeID INT REFERENCES HomeProfile(HomeID) ON DELETE CASCADE,
     UtilID INT REFERENCES Utilities(UtilID) ON DELETE CASCADE,
+    Payment BOOLEAN,
     PRIMARY KEY (HomeID, UtilID)
 );
 
