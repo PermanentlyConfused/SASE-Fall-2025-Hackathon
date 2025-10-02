@@ -139,8 +139,7 @@ header h1 {
 .event-background {
   width: 100%;
   height: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)),
-    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200"><defs><linearGradient id="casino" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23ff6b6b;stop-opacity:1" /><stop offset="25%" style="stop-color:%23ffd93d;stop-opacity:1" /><stop offset="50%" style="stop-color:%236bcf7f;stop-opacity:1" /><stop offset="75%" style="stop-color:%234ecdc4;stop-opacity:1" /><stop offset="100%" style="stop-color:%2345b7d1;stop-opacity:1" /></linearGradient></defs><rect width="800" height="200" fill="url(%23casino)"/><circle cx="100" cy="50" r="30" fill="%23ffd93d" opacity="0.8"/><circle cx="200" cy="80" r="25" fill="%23ff6b6b" opacity="0.8"/><circle cx="300" cy="60" r="35" fill="%236bcf7f" opacity="0.8"/><circle cx="400" cy="90" r="28" fill="%234ecdc4" opacity="0.8"/><circle cx="500" cy="70" r="32" fill="%2345b7d1" opacity="0.8"/><circle cx="600" cy="85" r="26" fill="%23ffd93d" opacity="0.8"/><circle cx="700" cy="55" r="30" fill="%23ff6b6b" opacity="0.8"/><rect x="50" y="120" width="700" height="60" fill="%23ffd93d" opacity="0.3" rx="30"/><rect x="100" y="130" width="600" height="40" fill="%23ff6b6b" opacity="0.4" rx="20"/><rect x="150" y="140" width="500" height="20" fill="%236bcf7f" opacity="0.5" rx="10"/></svg>');
+  /* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1007%26quot%3b)' fill='none'%3e%3crect width='1440' height='560' x='0' y='0' fill='%230e2a47'%3e%3c/rect%3e%3cpath d='M1121.059639829727 234.96029706926404L1163.7415283634011 95.82850762737057 1039.3041705444512 122.27848454866881z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M1059.6023295516864 513.3550551719883L958.4503329513198 404.6753493914302 918.3445186002942 528.1083539645887z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M772.3787410977179 213.38334698815822L836.9832849971029 280.2833106045849 903.8832486135296 215.67876670519996 839.2787047141446 148.77880308877323z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M1018.4497555356796 444.0578181755852L968.7648934985875 361.3683217038366 935.760259063931 493.7426802126774z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M1132.732%2c745.331C1183.21%2c744.9%2c1228.276%2c713.48%2c1251.372%2c668.593C1272.696%2c627.149%2c1264.042%2c578.054%2c1239.042%2c538.718C1215.944%2c502.376%2c1175.767%2c480.439%2c1132.732%2c481.922C1092.088%2c483.323%2c1060.503%2c511.496%2c1038.399%2c545.633C1013.527%2c584.045%2c990.982%2c629.273%2c1010.528%2c670.65C1032.382%2c716.914%2c1081.568%2c745.768%2c1132.732%2c745.331' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M1020.8425032623413 556.1152358559062L1052.7490017076805 457.91713086177833 889.498594993819 459.15643569083363z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float1'%3e%3c/path%3e%3cpath d='M370.082%2c7.655C387.369%2c7.972%2c407.118%2c6.388%2c415.646%2c-8.652C424.109%2c-23.577%2c415.723%2c-41.558%2c406.007%2c-55.7C397.759%2c-67.706%2c384.605%2c-73.86%2c370.082%2c-74.976C352.734%2c-76.309%2c332.716%2c-76.587%2c323.123%2c-62.071C312.886%2c-46.581%2c316.949%2c-25.671%2c327.321%2c-10.271C336.574%2c3.469%2c353.52%2c7.351%2c370.082%2c7.655' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M666.101040158371 341.6949049635378L574.4002085207713 272.5933718852301 505.29867544246366 364.2942035228298 596.9995070800633 433.39573660113746z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M614.8512540376023 376.9809256775514L583.2906118406775 513.6850859304458 751.5554142904966 408.54156787447624z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M966.887%2c206.086C1001.686%2c206.73%2c1037.559%2c198.622%2c1057.384%2c170.015C1080.124%2c137.2%2c1087.969%2c93.944%2c1068.913%2c58.861C1049.111%2c22.406%2c1008.365%2c2.582%2c966.887%2c3.409C926.804%2c4.208%2c890.153%2c27.216%2c871.669%2c62.792C854.457%2c95.919%2c861.349%2c135.678%2c882.01%2c166.77C900.506%2c194.604%2c933.474%2c205.468%2c966.887%2c206.086' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float2'%3e%3c/path%3e%3cpath d='M1067.055%2c614.362C1107.394%2c615.976%2c1144.756%2c593.653%2c1165.612%2c559.086C1187.204%2c523.299%2c1192.765%2c477.85%2c1170.918%2c442.218C1149.862%2c407.877%2c1107.337%2c398.512%2c1067.055%2c398.343C1026.391%2c398.172%2c981.519%2c405.849%2c961.669%2c441.339C942.12%2c476.291%2c960.442%2c517.506%2c981.275%2c551.709C1001.016%2c584.12%2c1029.135%2c612.844%2c1067.055%2c614.362' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M1164.357%2c427.713C1204.791%2c425.946%2c1246.274%2c414.184%2c1266.77%2c379.284C1287.487%2c344.007%2c1278.874%2c301.236%2c1259.926%2c264.979C1239.125%2c225.176%2c1209.263%2c184.005%2c1164.357%2c183.315C1118.687%2c182.613%2c1086.467%2c222.445%2c1063.564%2c261.963C1040.575%2c301.63%2c1021.352%2c349.794%2c1045.173%2c388.967C1068.437%2c427.223%2c1119.626%2c429.668%2c1164.357%2c427.713' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3cpath d='M676.4025745658197 91.57592710739769L628.1462105595358 133.5245443532926 715.1973184315202 184.93478173977104z' fill='rgba(28%2c 83%2c 142%2c 0.4)' class='triangle-float3'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1007'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3cstyle%3e %40keyframes float1 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-10px%2c 0)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float1 %7b animation: float1 5s infinite%3b %7d %40keyframes float2 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(-5px%2c -5px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float2 %7b animation: float2 4s infinite%3b %7d %40keyframes float3 %7b 0%25%7btransform: translate(0%2c 0)%7d 50%25%7btransform: translate(0%2c -10px)%7d 100%25%7btransform: translate(0%2c 0)%7d %7d .triangle-float3 %7b animation: float3 6s infinite%3b %7d %3c/style%3e%3c/defs%3e%3c/svg%3e"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -577,13 +576,13 @@ button:focus,
   gap: 20px;
   padding: 20px;
   background: #f0f4f8;
-  min-height: calc(100vh - 70px);
+  overflow-y: scroll;
+  height: 480px;
 }
 
 .event-card {
   display: flex;
   align-items: center;
-  gap: 20px;
   background: white;
   padding: 20px;
   border-radius: 16px;
@@ -601,13 +600,17 @@ button:focus,
 }
 
 .event-info h2 {
+  font-size: 26px;
+  font-weight: 600;
+}
+.event-info h3 {
   font-size: 22px;
-  margin-bottom: 5px;
+  font-weight: 600;
 }
 
 .event-time {
+  font-size: 24px;
   font-weight: 600;
-  color: #2c3e50;
 }
 
 .back-btn {

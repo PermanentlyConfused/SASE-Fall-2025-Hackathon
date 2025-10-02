@@ -35,6 +35,7 @@ app.get(`/events`, async (req, res) => {
           Address: row.address,
           Lat: row.lat,
           Long: row.long,
+          StartDate: row.startdate,
         });
       }
     }
