@@ -8,6 +8,10 @@ async function loadEvents() {
       const item = data.payload[i];
       const description = item.Description;
       const address = item.Address;
+      const category = item.Category;
+      if (category.toLowerCase() !== "events") {
+        continue;
+      }
       const date = new Date(item.StartDate).toLocaleDateString();
 
       EventsList.push(
