@@ -1,2 +1,0 @@
-INSERT INTO HomeProfile_Utilities (HomeID, UtilID, Payment) VALUES ('1', '1', 'FALSE'); 
-INSERT INTO HomeProfile_Utilities (HomeID, UtilID, Payment) VALUES ('1', '67', 'FALSE');
