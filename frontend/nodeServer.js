@@ -22,8 +22,21 @@ app.use(express.json());
 
 app.get(`/events`, async (req, res) => {
   try {
+    const today = new Date().toISOString().split("T")[0];
+
     const QueryRes = await pool.query(
-      "SELECT DISTINCT e.* FROM Events e JOIN Hobby_Events he ON he.EventID = e.EventID JOIN (SELECT hp.*,unnest(string_to_array(hp.Hobbies, ','))::INT AS HobbyID FROM HomeProfile hp JOIN SelectedProfile sp ON hp.HomeID = sp.HomeID) parsed_hobbies ON parsed_hobbies.HobbyID = he.HobbyID WHERE  ABS(e.Lat - parsed_hobbies.Lat) <= 0.5 AND ABS(e.Long - parsed_hobbies.Long) <= 0.5;"
+      `SELECT DISTINCT e.* 
+       FROM Events e 
+       JOIN Hobby_Events he ON he.EventID = e.EventID 
+       JOIN (
+         SELECT hp.*, unnest(string_to_array(hp.Hobbies, ','))::INT AS HobbyID 
+         FROM HomeProfile hp 
+         JOIN SelectedProfile sp ON hp.HomeID = sp.HomeID
+       ) parsed_hobbies ON parsed_hobbies.HobbyID = he.HobbyID 
+       WHERE ABS(e.Lat - parsed_hobbies.Lat) <= 0.5 
+         AND ABS(e.Long - parsed_hobbies.Long) <= 0.5
+         AND DATE(e.StartDate) = $1;`,
+      [today]
     );
     if (QueryRes.rows.length > 0) {
       var payload = [];
@@ -67,17 +80,21 @@ app.get(`/events`, async (req, res) => {
 
 app.get(`/getRandomEvents`, async (req, res) => {
   try {
+    const today = new Date().toISOString().split("T")[0];
+
     const QueryRes = await pool.query(
       `SELECT DISTINCT e.* 
-       FROM Events e 
-       JOIN Hobby_Events he ON he.EventID = e.EventID 
-       JOIN (
-         SELECT hp.*, unnest(string_to_array(hp.Hobbies, ','))::INT AS HobbyID 
-         FROM HomeProfile hp 
-         JOIN SelectedProfile sp ON hp.HomeID = sp.HomeID
-       ) parsed_hobbies ON parsed_hobbies.HobbyID = he.HobbyID 
-       WHERE ABS(e.Lat - parsed_hobbies.Lat) <= 0.5 
-         AND ABS(e.Long - parsed_hobbies.Long) <= 0.5;`
+   FROM Events e 
+   JOIN Hobby_Events he ON he.EventID = e.EventID 
+   JOIN (
+     SELECT hp.*, unnest(string_to_array(hp.Hobbies, ','))::INT AS HobbyID 
+     FROM HomeProfile hp 
+     JOIN SelectedProfile sp ON hp.HomeID = sp.HomeID
+   ) parsed_hobbies ON parsed_hobbies.HobbyID = he.HobbyID 
+   WHERE ABS(e.Lat - parsed_hobbies.Lat) <= 0.5 
+     AND ABS(e.Long - parsed_hobbies.Long) <= 0.5
+     AND DATE(e.StartDate) = $1;`,
+      [today]
     );
 
     if (QueryRes.rows.length > 0) {
