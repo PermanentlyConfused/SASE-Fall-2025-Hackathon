@@ -23,11 +23,11 @@ load_dotenv()
 
 # Custom webscraping tool using gemini 2.0 flash
 @tool
-def eventsExtractor(content: str):
-    """Takes the tavily results and organizes them into date, location, and description"""
+def eventsExtractor(content: str, 
+                    date: str):
+    """Takes the tavily results and a date to evaulate for valid events and organizes them into start/end date, location, and description"""
     llm = ChatGoogleGenerativeAI(model = "gemini-2.5-flash")
-    prompt = ChatPromptTemplate.from_messages([
-      ("system", """You are world-class expert at extracting information about events from online descriptions.
+    systemMsg = f"""You are world-class expert at extracting information about events from online descriptions.
        Your sole purpose is to find details about an event from the provided text and return them in a structured string with ASCII encoding.
        Ignore all irrelevant information like navigation, ads, sidebars, sign in prompts.
        Focus on the main content on the page.
@@ -40,12 +40,15 @@ def eventsExtractor(content: str):
         2. If multiple events are found, separate them with newlines
         3. 'name': The name of the event. If there is a "'" character, replace it with "''"
         4. 'start date': The date of the event mentioned. Format it clearly with date and time
-        5. 'end date': The date that the mentioned event ends. Format it clearly with date and time. If there is no ending date, put NULL in this field.
-        5. 'address': The exact address including street number, street, town, state, zipcode. If no specific address, use the venue name and add " (unsure)" to the end. If there is no address at all, then skip this event
-        6. Do NOT add any other text before or after the SQL statements
-        7. If no events are found, return an empty string
-       """),
-       ("human", "Extract the event details from the following HTML: \n\n {html}")
+        5. If 'start date' is before {date}, ignore this event.
+        6. 'end date': The date that the mentioned event ends. Format it clearly with date and time. If there is no ending date, put NULL in this field.
+        7. 'address': The exact address including street number, street, town, state, zipcode. If no specific address, use the venue name and add " (unsure)" to the end. If there is no address at all, then skip this event
+        8. Do NOT add any other text before or after the SQL statements
+        9. If no events are found, return an empty string
+       """
+    prompt = ChatPromptTemplate.from_messages([
+      ("system", systemMsg),
+       ("human", "Extract the event details from the following text: \n\n {html}")
    ])
 
     chain = prompt | llm
@@ -64,19 +67,18 @@ def eventsExtractor(content: str):
 
 # Tavily search
 def searchEvents(location: str,
-                 domain: str,
+                 date: str,
                  hobby: str):
 
     if hobby != "":
         hobby = " that's "+ hobby 
 
-    rq = f"events near {location} {domain} {hobby} within the next week"
+    rq = f"events near {location} {hobby} within the next week starting from {date}"
 
     # Call search
-    tool = TavilySearch(max_results=25, include_raw_content = True, time_range = 'week', search_depth = 'advanced', chunks_per_source = 2)
+    tool = TavilySearch(max_results=50, include_raw_content = True, time_range = 'week', search_depth = 'advanced', chunks_per_source = 2)
     tool_msg = tool.invoke({"query": rq})
     tavilySearch = ""
-
     # process search
     i = 0
     chunk = 2
@@ -86,11 +88,11 @@ def searchEvents(location: str,
         tavilySearch = tavilySearch + '\n' + result['content']
         if i % chunk == 0:
             # Call the tool directly
-            output = output + "\n" + eventsExtractor(tavilySearch)
+            output = output + "\n" + eventsExtractor.invoke({"content": tavilySearch, "date": date})
             tavilySearch = ""
 
     if i%chunk == 1:
-        output = output + "\n"+ eventsExtractor(tavilySearch)
+        output = output + "\n"+ eventsExtractor.invoke({"content": tavilySearch, "date": date})
     return output
 
 # Date time converter:
@@ -124,13 +126,13 @@ def googleMapsSearch(query: str) -> Optional[Dict]:
     try:
         api_key = os.getenv("GOOGLE_MAPS_API_KEY")
     except:
-        os.environ["GOOGLE_MAPS_API_KEY"] = getpass.getpass("Enter API key for Google Gemini: ")
+        os.environ["GOOGLE_MAPS_API_KEY"] = getpass.getpass("Enter API key for Google Places API: ")
         api_key = os.environ["GOOGLE_MAPS_API_KEY"]
     
-    endpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+    endpoint = "https://maps.googleapis.com/maps/api/place/textsearch/json?"
 
     params = {
-        "query": query,
+        "query": f"{query}",
         "key": api_key
     }
     
@@ -198,11 +200,13 @@ def processSQL(GeminiOutput: str):
                 # remove it
                 address = address.replace(match2.group(), "")
 
+        #result = {'location': {'lat': str(-1), 'lng': str(-2)}, 'address': "temp"}
+
         # Run to google maps to look up the places
         ### DO NOT RUN UNTIL READY!!!!!!
         result = googleMapsSearch(address)
 
-        #result = {'location': {'lat': str(-1), 'lng': str(-2)}, 'address': "temp"}
+
         naddress = ""
         if result:
             nlat = str(result['location']['lat'])
@@ -223,7 +227,7 @@ def processSQL(GeminiOutput: str):
             # replace LATITUDE
             sqlStatements[i] = sqlStatements[i][:-11] + " " + nlat + sqlStatements[i][-6:]
             # replace LONGITUDE
-            sqlStatements[i] = sqlStatements[i][:-5] + " " + nlon + ");"
+            sqlStatements[i] = sqlStatements[i][:-5] + ", " + nlon + ");"
 
     output1 = "\n".join(sqlStatements)
     return output1
@@ -243,8 +247,14 @@ if __name__ == "__main__" or not (os.getenv("GOOGLE_API_KEY") and os.getenv("TAV
             domain = sys.argv[2]
             hobby = sys.argv[3]
         except:
+            domain = ""
+            hobby = ""
             pass
-        events = searchEvents(location= location, domain = domain, hobby = hobby)
+        events = searchEvents(location= location, date = domain, hobby = hobby)
+        print('Event search complete')
         eventsLocated = processSQL(events)
+        with open("eventsPitt.txt", "w") as file:
+            file.write(eventsLocated)
+        print('Events done')
     else:
         print(f"Not enough args. Expected at least 1 args (location) but only received {len(sys.argv)-1}")
