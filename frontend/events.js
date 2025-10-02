@@ -2,7 +2,7 @@ async function loadEvents() {
   try {
     const response = await fetch("http://127.0.0.1:8081/events");
     const data = await response.json();
-    console.log(data);
+
     var EventsList = [];
     for (let i = 0; i < data.payload.length; i++) {
       const item = data.payload[i];

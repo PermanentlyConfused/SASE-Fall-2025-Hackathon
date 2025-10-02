@@ -17,7 +17,7 @@ function randomBackground() {
   ];
   const randomIndex = Math.floor(Math.random() * backgrounds.length);
   const randomImage = backgrounds[randomIndex];
-  console.log(randomImage);
+
   document.getElementById("help").style.backgroundImage = `${randomImage}`;
 }
 
