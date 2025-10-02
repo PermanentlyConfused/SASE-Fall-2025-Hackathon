@@ -55,10 +55,10 @@ app.get(`/events`, async (req, res) => {
           Long: row.long,
         });
       }
-      res.status(200).json({ payload });
-    } else {
-      res.status(401).json({ message: "Invalid req" });
     }
+    //   res.status(401).json({ message: "Invalid req" });
+    // }s
+    res.status(200).json({ payload });
   } catch (err) {
     console.log(err.message);
     res.status(500).json({ message: "Error: ", error: err.message });
