@@ -358,6 +358,59 @@ INSERT INTO Events (Category, Description, Address, StartDate, EndDate, Lat, Lon
 INSERT INTO Events (Category, Description, Address, StartDate, EndDate, Lat, Long) VALUES ('Events', 'Fall Harvest Town Square Market', '2525 Rochester Rd, Cranberry Twp, PA 16066, United States', '2025-09-05 00:00:00', '2025-09-05 23:59:59',  40.6977556,  -80.10817829999999);
 INSERT INTO Events (Category, Description, Address, StartDate, EndDate, Lat, Long) VALUES ('Events', 'Friday Night Lights at the Brewery', '205 S Main St, Zelienople, PA 16063, United States', '2025-06-13 00:00:00', '2025-06-13 23:59:59',  40.794154,  -80.1369007);
 INSERT INTO Events (Category, Description, Address, StartDate, EndDate, Lat, Long) VALUES ('Events', 'Gnome Scavenger Hunt', '7370 Baker St, Pittsburgh, PA 15206, United States', 'October 2, 2025 6:30 PM', 'November 2, 2025 10:30 PM',  40.4842648,  -79.922206);
+INSERT INTO Events (Category, Description, Address, StartDate, EndDate, Lat, Long) VALUES 
+('Foods', 'Altius', '1230 Grandview Ave, Pittsburgh, PA 15211', NULL, NULL, 40.4384, -80.0083),
+('Foods', 'Bar Marco', '2216 Penn Ave, Pittsburgh, PA 15222', NULL, NULL, 40.4430, -79.9716),
+('Foods', 'Casbah', '229 S Highland Ave, Pittsburgh, PA 15206', NULL, NULL, 40.4629, -79.9378),
+('Foods', 'EYV Restaurant', 'North Side, Pittsburgh, PA', NULL, NULL, 40.4536202, -80.0008352),
+('Foods', 'Spork', 'Address unknown (Pittsburgh, PA)', NULL, NULL, 40.4646409, -79.9353306),
+('Foods', 'Café Momentum', 'Pittsburgh, PA', NULL, NULL, 40.440186, -80.001392),
+('Foods', 'Spirits & Tales', 'Pittsburgh, PA', NULL, NULL, 40.4449359, -79.9550611),
+('Foods', 'Shake Smart', 'Pittsburgh, PA', NULL, NULL, 40.4436543, -79.9622606),
+('Foods', 'Mezzo at Sienna Mercato', 'Pittsburgh, PA', NULL, NULL, 40.443966, -79.996412),
+('Foods', 'Butterjoint', 'Pittsburgh, PA', NULL, NULL, 40.4501541, -79.9507767),
+('Foods', 'Mad Mex – Shadyside', '220 S Highland Ave, Pittsburgh, PA 15206', NULL, NULL, 40.4629, -79.9378),
+('Foods', 'Monterey Bay Fish Grotto', '1411 Grandview Ave, Pittsburgh, PA 15211', NULL, NULL, 40.4384, -80.0085),
+('Foods', 'Muddy Waters Oyster Bar', '130 S Highland Ave, Pittsburgh, PA 15206', NULL, NULL, 40.4629, -79.9378),
+('Foods', 'Paris 66 Bistro', '6018 Centre Ave, Pittsburgh, PA 15206', NULL, NULL, 40.4530, -79.9510),
+('Foods', 'Senti', '3473 Butler St, Pittsburgh, PA 15201', NULL, NULL, 40.4725, -79.9521),
+('Foods', 'Soba', '5847 Ellsworth Ave, Pittsburgh, PA 15232', NULL, NULL, 40.4550, -79.9430),
+('Foods', 'Spreezzatura', '616 N Highland Ave, Pittsburgh, PA 15206', NULL, NULL, 40.4633, -79.9545),
+('Foods', 'Sushi Atarashi', '120 Oakland Ave, Pittsburgh, PA 15213', NULL, NULL, 40.4408, -79.9533),
+('Foods', 'Terrene Station Square', '224 W Station Square Dr, Pittsburgh, PA 15219', NULL, NULL, 40.4050, -80.0150),
+('Foods', 'Habitat Restaurant', '510 Market St, Pittsburgh, PA 15222', NULL, NULL, 40.4418, -79.9956),
+('Foods', 'Viva La Vida Mexican Bar & Grill', '1141 Freeport Rd, Pittsburgh, PA 15238', NULL, NULL, 40.4848, -79.8952), 
+('Foods', 'Lot 17', '4617 Liberty Ave, Pittsburgh, PA 15224', NULL, NULL, 40.4364, -79.9483), 
+('Foods', 'Viva Los Tacos', '3901 Forbes Ave, Pittsburgh, PA 15213', NULL, NULL, 40.4433, -79.9497),  
+('Foods', 'The Mediterranean Table', '2108 Murray Ave, Pittsburgh, PA 15217', NULL, NULL, 40.4511, -79.9426), 
+('Foods', 'Tepache Mexican Kitchen & Bar', '1374 Freeport Rd, Pittsburgh, PA 15238', NULL, NULL, 40.4830, -79.8965), 
+('Foods', 'Moonlit Burgers Dormont', '1426 Potomac Ave, Pittsburgh, PA 15216', NULL, NULL, 40.4073, -80.0281),  
+('Foods', 'Totopo Cocina & Cantina', '660 Washington Rd, Pittsburgh, PA 15228', NULL, NULL, 40.3569, -80.0379),  
+('Foods', 'Albero Verde', '2101 Greentree Rd, Unit A‑115.5, Pittsburgh, PA 15220', NULL, NULL, 40.3955, -80.0298),  
+('Foods', 'City Works (Market Square)', '2 PPG Place, Pittsburgh, PA 15222', NULL, NULL, 40.4423, -79.9956),  
+('Foods', 'G''s On Liberty', '5104 Liberty Ave, Pittsburgh, PA 15224', NULL, NULL, 40.4356, -79.9566);  
+
+INSERT INTO Events (Category, Description, Address, StartDate, EndDate, Lat, Long) VALUES 
+('Attractions', 'Senator John Heinz History Center', '1212 Smallman St, Pittsburgh, PA 15222', NULL, NULL, 40.4470, -79.9920),
+('Attractions', 'Phipps Conservatory and Botanical Gardens', 'One Schenley Park / 700 Frank Curto Drive, Pittsburgh, PA 15213', NULL, NULL, 40.43895, -79.94770),
+('Attractions', 'Mattress Factory Contemporary Art Museum', '509 Jacksonia St, Pittsburgh, PA 15212', NULL, NULL, 40.46779, -80.00675),
+('Attractions', 'Duquesne Incline', '1197 West Carson St, Pittsburgh, PA 15219', NULL, NULL, 40.43910, -80.01820),
+('Attractions', 'Children’s Museum of Pittsburgh', '10 Children’s Way, Pittsburgh, PA 15212', NULL, NULL, 40.45260, -80.00697),
+('Attractions', 'Fort Pitt Museum', '601 Commonwealth Place, Pittsburgh, PA 15222', NULL, NULL, 40.4761, -79.9568),
+('Attractions', 'Randyland', '1501 Arch St, Pittsburgh, PA 15212', NULL, NULL, 40.45793, -80.00975),
+('Attractions', 'Andy Warhol Museum', '117 Sandusky St, Pittsburgh, PA 15212', NULL, NULL, 40.4500, -79.9640),
+('Attractions', 'Carnegie Museum of Natural History', '4400 Forbes Ave, Pittsburgh, PA 15213', NULL, NULL, 40.44361, -79.95000),
+('Attractions', 'Carnegie Museum of Art', '4400 Forbes Ave, Pittsburgh, PA 15213', NULL, NULL, 40.44361, -79.95000),
+('Attractions', 'Carnegie Science Center', 'One Allegheny Ave, Pittsburgh, PA 15212', NULL, NULL, 40.44604, -80.01930),
+('Attractions', 'Frick Art & Historical Center', '7227 Reynolds St, Pittsburgh, PA 15208', NULL, NULL, 40.4458, -79.8800),
+('Attractions', 'National Aviary', '700 Arch St, Pittsburgh, PA 15212', NULL, NULL, 40.4345, -79.9237),
+('Attractions', 'Point State Park', '601 Commonwealth Place, Pittsburgh, PA 15222', NULL, NULL, 40.4723, -79.9654),
+('Attractions', 'Soldiers & Sailors Memorial Hall & Museum', '4141 Fifth Ave, Pittsburgh, PA 15213', NULL, NULL, 40.4451, -79.9458),
+('Attractions', 'The Frick Pittsburgh', '7227 Reynolds St, Pittsburgh, PA 15208', NULL, NULL, 40.4458, -79.8800),
+('Attractions', 'Cathedral of Learning / Nationality Rooms', '4200 Fifth Ave, Pittsburgh, PA 15260', NULL, NULL, 40.4445, -79.9530),
+('Attractions', 'Bayernhof Music Museum', 'Hara Township, PA', NULL, NULL, 40.5030, -79.9010),
+('Attractions', 'Bicycle Heaven', '1800 Preble Ave, Pittsburgh, PA 15233', NULL, NULL, 40.4630, -80.0200),
+('Attractions', 'Ferris House (George Washington Gale Ferris Jr. House)', '1318 Arch St, Pittsburgh, PA 15212', NULL, NULL, 40.4581, -80.0124);
 
 
 INSERT INTO Hobby_Events (EventID, HobbyID) VALUES (1, 1);
